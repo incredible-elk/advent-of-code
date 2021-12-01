@@ -1,62 +1,61 @@
 // --- EXAMPLE PART 1 --- //
-const exampleMeasures = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
 
-let exampleCounter = 0;
-
-for (let i = 0; i < exampleMeasures.length; i++) {
-  if (exampleMeasures[i] > exampleMeasures[i - 1]) {
-    exampleCounter++;
-  }
-}
-console.log(exampleCounter);
-
-// --- PART 1 --- //
-
-const depthMeasures = await Deno.readTextFile("./input.txt");
-
-const listDepthMeasuresStrings = depthMeasures.split("\n");
-
-const listDepthMeasuresNumbers = listDepthMeasuresStrings.map((depthMeasure) =>
-  parseInt(depthMeasure, 10)
-);
-
-let counter = 0;
-
-for (let i = 0; i < listDepthMeasuresNumbers.length; i++) {
-  if (listDepthMeasuresNumbers[i] > listDepthMeasuresNumbers[i - 1]) {
-    counter++;
-  }
-}
-
-console.log(counter);
-
-// --- EXAMPLE PART 2 --- //
-
-const exampleMeasures2: Array<number> = [
+const exampleMeasurements: Array<number> = [
   199, 200, 208, 210, 200, 207, 240, 269, 260, 263,
 ];
 
-const countNumberOfIncreasedMeasureTriplets = (measures: Array<number>) => {
-  let previousSum = +Infinity;
-  let counter2 = 0;
+const countNumberOfIncreasedMeasurements = (measurements: Array<number>) => {
+  let counter = 0;
 
-  for (let i = 0; i <= measures.length - 3; i++) {
-    let currSum = 0;
-
-    for (let j = i; j < i + 3; j++) {
-      currSum += measures[j];
+  for (let i = 0; i < measurements.length; i++) {
+    if (measurements[i] > measurements[i - 1]) {
+      counter++;
     }
-
-    if (currSum > previousSum) {
-      counter2++;
-    }
-    previousSum = currSum;
   }
-  return counter2;
+  return counter;
 };
 
-console.log(countNumberOfIncreasedMeasureTriplets(exampleMeasures2));
+console.log(countNumberOfIncreasedMeasurements(exampleMeasurements));
+
+// --- PART 1 --- //
+
+const measurements = await Deno.readTextFile("./input.txt");
+
+const listMeasurementsStrings = measurements.split("\n");
+
+const listMeasurementsNumbers = listMeasurementsStrings.map((measurement) =>
+  parseInt(measurement, 10)
+);
+
+console.log(countNumberOfIncreasedMeasurements(listMeasurementsNumbers));
+
+// --- EXAMPLE PART 2 --- //
+
+const exampleMeasurements2: Array<number> = [
+  199, 200, 208, 210, 200, 207, 240, 269, 260, 263,
+];
+
+const countNumberOfIncreasedMeasureTriplets = (measurements: Array<number>) => {
+  let previousSum = +Infinity;
+  let counter = 0;
+
+  for (let i = 0; i <= measurements.length - 3; i++) {
+    let currentSum = 0;
+
+    for (let j = i; j < i + 3; j++) {
+      currentSum += measurements[j];
+    }
+
+    if (currentSum > previousSum) {
+      counter++;
+    }
+    previousSum = currentSum;
+  }
+  return counter;
+};
+
+console.log(countNumberOfIncreasedMeasureTriplets(exampleMeasurements2));
 
 // --- PART 2 --- //
 
-console.log(countNumberOfIncreasedMeasureTriplets(listDepthMeasuresNumbers));
+console.log(countNumberOfIncreasedMeasureTriplets(listMeasurementsNumbers));
