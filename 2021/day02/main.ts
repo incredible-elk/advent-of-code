@@ -17,37 +17,29 @@ const extractNumberFromExampleCourseValue = (courseValue: string) =>
 const exampleCourse = "forward 5, down 5, forward 8, up 3, down 8, forward 2";
 const exampleCourseArray = exampleCourse.split(", ");
 
-const foo = (courseArray: Array<string>) => {
-  const distance = courseArray.filter((courseValue) =>
-    courseValue.startsWith("forward ")
+const sumUpCourseValues = (
+  courseArray: Array<string>,
+  courseValueStartsWith: string
+) => {
+  const filteredCourseValues = courseArray.filter((courseValue) =>
+    courseValue.startsWith(courseValueStartsWith)
   );
-
-  const depth = courseArray.filter(
-    (courseValue) =>
-      courseValue.startsWith("up ") || courseValue.startsWith("down ")
-  );
-
-  const distanceInNumbers = distance.map(extractNumberFromExampleCourseValue);
-
-  const depthInNumbers = depth.map((courseValue) => {
-    const courseValueNumber = extractNumberFromExampleCourseValue(courseValue);
-    if (courseValue.startsWith("up")) {
-      return -courseValueNumber;
-    } else {
-      return courseValueNumber;
-    }
-  });
-
-  const sumDistance = sumArray(distanceInNumbers);
-  const sumDepth = sumArray(depthInNumbers);
-  return sumDistance * sumDepth;
+  const numbers = filteredCourseValues.map(extractNumberFromExampleCourseValue);
+  return sumArray(numbers);
 };
 
-console.log(foo(exampleCourseArray));
+const newSubmarinePosition = (courseArray: Array<string>) => {
+  const sumDistance = sumUpCourseValues(courseArray, "forward ");
+  const sumUpDepth = sumUpCourseValues(courseArray, "up ");
+  const sumDownDepth = sumUpCourseValues(courseArray, "down ");
+  const sumDepth = sumDownDepth - sumUpDepth;
+  return sumDistance * sumDepth;
+};
+console.log(newSubmarinePosition(exampleCourseArray));
 
 // --- PART 1 --- //
 
 const course = await Deno.readTextFile("./input.txt");
 const inputCourseArray = course.split("\n");
 
-console.log(foo(inputCourseArray));
+console.log(newSubmarinePosition(inputCourseArray));
