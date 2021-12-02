@@ -9,7 +9,7 @@ const sumArray = (array: Array<number>) => {
   return distanceSum;
 };
 
-const extractNumberFromExampleCourseValue = (courseValue: string) =>
+const extractNumberFromCourseValue = (courseValue: string) =>
   parseInt(courseValue.slice(courseValue.indexOf(" ") + 1), 10);
 
 // --- EXAMPLE PART 1 --- //
@@ -24,7 +24,7 @@ const sumUpCourseValues = (
   const filteredCourseValues = courseArray.filter((courseValue) =>
     courseValue.startsWith(courseValueStartsWith)
   );
-  const numbers = filteredCourseValues.map(extractNumberFromExampleCourseValue);
+  const numbers = filteredCourseValues.map(extractNumberFromCourseValue);
   return sumArray(numbers);
 };
 
@@ -43,3 +43,32 @@ const course = await Deno.readTextFile("./input.txt");
 const inputCourseArray = course.split("\n");
 
 console.log(newSubmarinePosition(inputCourseArray));
+
+// --- EXAMPLE PART 2 --- //
+
+const finalSubmarinePosition = (array: Array<string>) => {
+  let horizontalDistance = 0;
+  let aim = 0;
+  let depth = 0;
+
+  for (let i = 0; i < array.length; i++) {
+    const courseValue = array[i];
+    const courseValueNumber = extractNumberFromCourseValue(courseValue);
+
+    if (courseValue.startsWith("forward ")) {
+      horizontalDistance += courseValueNumber;
+      depth += courseValueNumber * aim;
+    } else if (courseValue.startsWith("up ")) {
+      aim -= courseValueNumber;
+    } else if (courseValue.startsWith("down ")) {
+      aim += courseValueNumber;
+    }
+  }
+  return horizontalDistance * depth;
+};
+
+console.log(finalSubmarinePosition(exampleCourseArray));
+
+// --- PART 2 --- //
+
+console.log(finalSubmarinePosition(inputCourseArray));
