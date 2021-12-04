@@ -92,7 +92,64 @@ const squidGameDrawingNumbers = convertToNumbers(
   inputDrawingNumbers.split(",")
 );
 
-const inputBoardsString = inputBingoSystem.substring(seperatorIndex);
+const inputBoardsString = inputBingoSystem.substring(seperatorIndex + 2);
 const squidGameBoards = convertStringToBingoBoardArrays(inputBoardsString);
 
 console.log(playBingo(squidGameBoards, squidGameDrawingNumbers));
+
+// --- EXAMPLE PART 2 --- //
+
+const looseBingo = (boards: number[][][], drawingNumbers: Array<number>) => {
+  let playedBoards: (number | "x")[][][] = boards;
+
+  for (let i = 0; i < drawingNumbers.length; i++) {
+    playedBoards = playedBoards.map((board) =>
+      board.map((boardRow) =>
+        boardRow.map((number) => (number === drawingNumbers[i] ? "x" : number))
+      )
+    );
+
+    let lastBoard = undefined;
+
+    if (playedBoards.length === 1) {
+      lastBoard = playedBoards[0];
+    }
+
+    playedBoards = playedBoards.filter(
+      (board) =>
+        !(
+          board.some((boardRow) =>
+            boardRow.every((number) => number === "x")
+          ) ||
+          board[0].some((_, columnIndex) =>
+            board.every((boardRow) => boardRow[columnIndex] === "x")
+          )
+        )
+    );
+
+    if (playedBoards.length === 0) {
+      if (!lastBoard) throw new Error("no last board found!");
+      const winningBoardLeftoverNumbers = lastBoard.map((boardRow) =>
+        boardRow.map((number) => (number !== "x" ? number : 0))
+      );
+
+      const winningBoardRowSums = winningBoardLeftoverNumbers.map((boardRow) =>
+        sumArray(boardRow)
+      );
+      const winningBoardSum = sumArray(winningBoardRowSums);
+      return winningBoardSum * drawingNumbers[i];
+    }
+  }
+  throw new Error("no winner found");
+};
+
+console.log(
+  looseBingo(
+    convertStringToBingoBoardArrays(exampleInputBoardsString),
+    exampleDrawingNumbers
+  )
+);
+
+// --- PART 2 --- //
+
+console.log(looseBingo(squidGameBoards, squidGameDrawingNumbers));
