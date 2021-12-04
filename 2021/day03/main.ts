@@ -90,4 +90,6 @@ console.log(determineLifeSupportRating(exampleDiagnosticReportArray));
 
 // --- PART 2 --- //
 
+// for input see PART 1 line 37-38
+
 console.log(determineLifeSupportRating(diagnosticReportArray));
