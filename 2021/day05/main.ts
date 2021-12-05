@@ -24,7 +24,10 @@ const parseInput = (input: string) =>
       )
     );
 
-const countVentOverlapps = (pointArray: number[][][]) => {
+const countVentOverlaps = (
+  pointArray: number[][][],
+  countDiagonals: boolean
+) => {
   const pointCounter: Record<string, number> = {};
 
   for (let i = 0; i < pointArray.length; i++) {
@@ -48,7 +51,17 @@ const countVentOverlapps = (pointArray: number[][][]) => {
         linePoints.push([x, y1]);
       }
     } else {
-      // console.log("diagonal");
+      if (countDiagonals) {
+        const differenceX = x2 - x1;
+        const numberOfPoints = Math.abs(differenceX) + 1;
+        // console.log("diagonal");
+
+        for (let j = 0; j < numberOfPoints; j++) {
+          const x = x1 < x2 ? x1 + j : x1 - j;
+          const y = y1 < y2 ? y1 + j : y1 - j;
+          linePoints.push([x, y]);
+        }
+      }
     }
 
     linePoints.forEach((point) => {
@@ -68,10 +81,18 @@ const countVentOverlapps = (pointArray: number[][][]) => {
   return numberOfOverlappingPoints.length;
 };
 
-console.log(countVentOverlapps(parseInput(exampleInput)));
+console.log(countVentOverlaps(parseInput(exampleInput), false));
 
 // --- PART 1 --- //
 
 const ventInput = await Deno.readTextFile("./input.txt");
 
-console.log(countVentOverlapps(parseInput(ventInput)));
+console.log(countVentOverlaps(parseInput(ventInput), false));
+
+// --- EXAMPLE PART 2 --- //
+
+console.log(countVentOverlaps(parseInput(exampleInput), true));
+
+// --- PART 2 --- //
+
+console.log(countVentOverlaps(parseInput(ventInput), true));
