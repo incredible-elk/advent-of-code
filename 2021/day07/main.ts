@@ -9,7 +9,7 @@ const parseInput = (input: string) => convertToNumbers(input.split(","));
 const exampleInputCrabPositions = "16,1,2,0,4,2,7,1,2,14";
 const exampleCrabPositions = parseInput(exampleInputCrabPositions);
 
-const cheapestFuelCosts = (input: Array<number>) => {
+const cheapestFuelCosts = (input: Array<number>, constantFuelRate: boolean) => {
   const furthestPosition = input.reduce((previousMax, current) =>
     current > previousMax ? current : previousMax
   );
@@ -21,7 +21,22 @@ const cheapestFuelCosts = (input: Array<number>) => {
   let minFuelTotal = Infinity;
 
   for (let i = nearestPosition; i < furthestPosition; i++) {
-    const fuelTotal = sumArray(input.map((position) => Math.abs(i - position)));
+    const fuelTotal = sumArray(
+      input.map((position) => {
+        const difference = Math.abs(i - position);
+
+        if (constantFuelRate) {
+          return difference;
+        } else {
+          let growingFuelCost = 0;
+
+          for (let i = 1; i <= difference; i++) {
+            growingFuelCost += i;
+          }
+          return growingFuelCost;
+        }
+      })
+    );
 
     if (fuelTotal < minFuelTotal) {
       minFuelTotal = fuelTotal;
@@ -30,11 +45,19 @@ const cheapestFuelCosts = (input: Array<number>) => {
   return minFuelTotal;
 };
 
-console.log(cheapestFuelCosts(exampleCrabPositions));
+console.log(cheapestFuelCosts(exampleCrabPositions, true));
 
 // --- PART 1 --- //
 
 const inputCrabPositions = await Deno.readTextFile("input.txt");
 const crabPositions = parseInput(inputCrabPositions);
 
-console.log(cheapestFuelCosts(crabPositions));
+console.log(cheapestFuelCosts(crabPositions, true));
+
+// --- EXAMPLE PART 2 --- //
+
+console.log(cheapestFuelCosts(exampleCrabPositions, false));
+
+// --- PART 2 --- //
+
+console.log(cheapestFuelCosts(crabPositions, false));
