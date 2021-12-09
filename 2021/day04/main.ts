@@ -1,9 +1,4 @@
-import { sumArray } from "../utils.ts";
-
-// --- UTILS --- //
-
-const convertToNumbers = (array: Array<string>) =>
-  array.map((string) => parseInt(string, 10));
+import { sumArray, convertToNumbers } from "../utils.ts";
 
 // --- EXAMPLE PART 1 --- //
 

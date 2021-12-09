@@ -6,3 +6,6 @@ export const sumArray = (array: Array<number>) => {
   }
   return distanceSum;
 };
+
+export const convertToNumbers = (array: Array<string>) =>
+  array.map((string) => parseInt(string, 10));
