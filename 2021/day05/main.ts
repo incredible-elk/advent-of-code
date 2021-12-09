@@ -54,7 +54,6 @@ const countVentOverlaps = (
       if (countDiagonals) {
         const differenceX = x2 - x1;
         const numberOfPoints = Math.abs(differenceX) + 1;
-        // console.log("diagonal");
 
         for (let j = 0; j < numberOfPoints; j++) {
           const x = x1 < x2 ? x1 + j : x1 - j;
