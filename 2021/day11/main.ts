@@ -39,7 +39,8 @@ const numberOfFlashes = (input: number[][]) => {
 
   let currentEnergy = input;
 
-  for (let iteration = 0; iteration < 100; iteration++) {
+  let iteration = 0;
+  while (true) {
     currentEnergy = currentEnergy.map((line) =>
       line.map((energyLevel) => energyLevel + 1)
     );
@@ -54,7 +55,9 @@ const numberOfFlashes = (input: number[][]) => {
 
           if (energyLevel > 9) {
             line[columnIndex] = 0;
-            flashCounter++;
+            if (iteration < 100) {
+              flashCounter++;
+            }
 
             const newNeighbors = possibleNeighbors
               .map(([l, c]) => [l + lineIndex, c + columnIndex])
@@ -77,11 +80,18 @@ const numberOfFlashes = (input: number[][]) => {
       });
       if (neighbors.length === 0) break;
     }
+    iteration++;
+    const allFlash = currentEnergy.every((line) =>
+      line.every((energyLevel) => energyLevel === 0)
+    );
+    if (allFlash) {
+      break;
+    }
   }
-  return { flashCounter };
+  return { flashCounter, iteration };
 };
 
-console.log(numberOfFlashes(exampleOctopusEnergy));
+console.log(numberOfFlashes(exampleOctopusEnergy).flashCounter);
 
 // --- PART 1 --- //
 
@@ -89,4 +99,12 @@ const octopusEnergyInput = await Deno.readTextFile("input.txt");
 
 const octopusEnergy = parseInput(octopusEnergyInput);
 
-console.log(numberOfFlashes(octopusEnergy));
+console.log(numberOfFlashes(octopusEnergy).flashCounter);
+
+// --- EXAMPLE PART 2 --- //
+
+console.log(numberOfFlashes(exampleOctopusEnergy).iteration);
+
+// --- PART 2 --- //
+
+console.log(numberOfFlashes(octopusEnergy).iteration);
