@@ -17,8 +17,8 @@ I chose to solve them with Typescript using [`deno`](https://deno.land/). To run
 | 07  | [✓](https://github.com/incredible-elk/advent-of-code/blob/main/2021/day07/main.ts) | [The Treachery of Whales - Align crab submarines horizontally](https://adventofcode.com/2021/day/7)             |
 | 08  | [?](https://github.com/incredible-elk/advent-of-code/blob/main/2021/day08/main.ts) | [Seven Segment Search - ](https://adventofcode.com/2021/day/8)                                                  |
 | 09  | [?](https://github.com/incredible-elk/advent-of-code/blob/main/2021/day09/main.ts) | [Smoke Basin - ](https://adventofcode.com/2021/day/9)                                                           |
-| 10  | [?](https://github.com/incredible-elk/advent-of-code/blob/main/2021/day10/main.ts) | [Syntax Scoring - Find mistakes in the navigation subsystem syntax](https://adventofcode.com/2021/day/10)       |
-| 11  | [?](https://github.com/incredible-elk/advent-of-code/blob/main/2021/day11/main.ts) | [???](https://adventofcode.com/2021/day/11)                                                                     |
+| 10  | [✓](https://github.com/incredible-elk/advent-of-code/blob/main/2021/day10/main.ts) | [Syntax Scoring - Find mistakes in the navigation subsystem syntax](https://adventofcode.com/2021/day/10)       |
+| 11  | [✓](https://github.com/incredible-elk/advent-of-code/blob/main/2021/day11/main.ts) | [Dumbo Octopus - Chain reaction of energy flashes](https://adventofcode.com/2021/day/11)                        |
 | 12  | [?](https://github.com/incredible-elk/advent-of-code/blob/main/2021/day12/main.ts) | [???](https://adventofcode.com/2021/day/12)                                                                     |
 | 13  | [?](https://github.com/incredible-elk/advent-of-code/blob/main/2021/day13/main.ts) | [???](https://adventofcode.com/2021/day/13)                                                                     |
 | 14  | [?](https://github.com/incredible-elk/advent-of-code/blob/main/2021/day14/main.ts) | [???](https://adventofcode.com/2021/day/14)                                                                     |
