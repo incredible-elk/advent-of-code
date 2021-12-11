@@ -1,3 +1,5 @@
+import { sumArray } from "../utils.ts";
+
 // --- UTILS --- //
 
 const parseInput = (input: string) =>
@@ -5,6 +7,29 @@ const parseInput = (input: string) =>
     .trim()
     .split("\n")
     .map((line) => line.trim().split(""));
+
+const matchingOpeningCharacters = {
+  ")": "(",
+  "]": "[",
+  "}": "{",
+  ">": "<",
+} as const;
+
+type ClosingCharacter = keyof typeof matchingOpeningCharacters;
+type OpeningCharacter = typeof matchingOpeningCharacters[ClosingCharacter];
+
+const corruptedCharacterPoints = { ")": 3, "]": 57, "}": 1197, ">": 25137 };
+const incompleteCharacterPoints = { ")": 1, "]": 2, "}": 3, ">": 4 };
+
+const isOpening = (character: string): character is OpeningCharacter =>
+  Object.values(matchingOpeningCharacters).includes(
+    character as OpeningCharacter
+  );
+
+const isClosing = (character: string): character is ClosingCharacter =>
+  Object.keys(matchingOpeningCharacters).includes(
+    character as ClosingCharacter
+  );
 
 // --- EXAMPLE PART 1 --- //
 
@@ -23,120 +48,22 @@ const exampleNavigationInputString = `
 const exampleNavigationInput = parseInput(exampleNavigationInputString);
 
 const syntaxErrorScore = (navigationSubsystem: string[][]) => {
-  let parenthesisCounter = 0;
-  let bracketCounter = 0;
-  let bracesCounter = 0;
-  let tagCounter = 0;
-
-  for (const line of navigationSubsystem) {
-    const openingCharacter = [];
-
-    for (let i = 0; i < line.length; i++) {
-      if (
-        line[i] === "(" ||
-        line[i] === "{" ||
-        line[i] === "[" ||
-        line[i] === "<"
-      ) {
-        openingCharacter.push(line[i]);
-      } else if (line[i] === ")") {
-        const lastOpeningCharacter = openingCharacter.pop();
-
-        if (lastOpeningCharacter !== "(") {
-          parenthesisCounter++;
-          break;
-        }
-      } else if (line[i] === "]") {
-        const lastOpeningCharacter = openingCharacter.pop();
-
-        if (lastOpeningCharacter !== "[") {
-          bracketCounter++;
-          break;
-        }
-      } else if (line[i] === "}") {
-        const lastOpeningCharacter = openingCharacter.pop();
-
-        if (lastOpeningCharacter !== "{") {
-          bracesCounter++;
-          break;
-        }
-      } else if (line[i] === ">") {
-        const lastOpeningCharacter = openingCharacter.pop();
-
-        if (lastOpeningCharacter !== "<") {
-          tagCounter++;
-          break;
-        }
-      }
-    }
-  }
-
-  console.log({
-    parenthesisCounter,
-    bracketCounter,
-    bracesCounter,
-    tagCounter,
-  });
-
-  return (
-    parenthesisCounter * 3 +
-    bracketCounter * 57 +
-    bracesCounter * 1197 +
-    tagCounter * 25137
-  );
-};
-
-console.log(syntaxErrorScore(exampleNavigationInput));
-
-// --- PART 1 --- //
-
-const navigationInputString = await Deno.readTextFile("input.txt");
-const navigationInput = parseInput(navigationInputString);
-
-console.log(syntaxErrorScore(navigationInput));
-
-// --- EXAMPLE PART 2 --- //
-
-const syntaxErrorScore2 = (navigationSubsystem: string[][]) => {
+  const counters = { ")": 0, "]": 0, "}": 0, ">": 0 };
   const totalScoreArray = [];
 
   for (const line of navigationSubsystem) {
-    const openingCharacters = [];
+    const openingCharacters: OpeningCharacter[] = [];
     let isCorrupted = false;
 
     for (let i = 0; i < line.length; i++) {
-      if (
-        line[i] === "(" ||
-        line[i] === "{" ||
-        line[i] === "[" ||
-        line[i] === "<"
-      ) {
-        openingCharacters.push(line[i]);
-      } else if (line[i] === ")") {
+      const character = line[i];
+      if (isOpening(character)) {
+        openingCharacters.push(character);
+      } else if (isClosing(character)) {
         const lastOpeningCharacter = openingCharacters.pop();
 
-        if (lastOpeningCharacter !== "(") {
-          isCorrupted = true;
-          break;
-        }
-      } else if (line[i] === "]") {
-        const lastOpeningCharacter = openingCharacters.pop();
-
-        if (lastOpeningCharacter !== "[") {
-          isCorrupted = true;
-          break;
-        }
-      } else if (line[i] === "}") {
-        const lastOpeningCharacter = openingCharacters.pop();
-
-        if (lastOpeningCharacter !== "{") {
-          isCorrupted = true;
-          break;
-        }
-      } else if (line[i] === ">") {
-        const lastOpeningCharacter = openingCharacters.pop();
-
-        if (lastOpeningCharacter !== "<") {
+        if (lastOpeningCharacter !== matchingOpeningCharacters[character]) {
+          counters[character]++;
           isCorrupted = true;
           break;
         }
@@ -145,32 +72,50 @@ const syntaxErrorScore2 = (navigationSubsystem: string[][]) => {
     if (!isCorrupted) {
       const missingClosingCharacters = openingCharacters
         .map((character) => {
-          if (character === "(") return ")";
-          if (character === "[") return "]";
-          if (character === "{") return "}";
-          if (character === "<") return ">";
-          throw new Error("Error!");
+          const entry = Object.entries(matchingOpeningCharacters).find(
+            (pair) => pair[1] === character
+          );
+          if (entry === undefined) throw new Error("Error!");
+          return entry[0] as ClosingCharacter;
         })
         .reverse();
 
-      const points = { ")": 1, "]": 2, "}": 3, ">": 4 };
       let totalScore = 0;
 
       for (const character of missingClosingCharacters) {
         totalScore = totalScore * 5;
-        totalScore += points[character];
+        totalScore += incompleteCharacterPoints[character];
       }
       totalScoreArray.push(totalScore);
     }
   }
+
+  const keys = Object.keys(counters) as ClosingCharacter[];
+  const values = keys.map(
+    (key) => counters[key] * corruptedCharacterPoints[key]
+  );
   totalScoreArray.sort((a, b) => a - b);
   const middleIndex = Math.floor(totalScoreArray.length / 2);
 
-  return totalScoreArray[middleIndex];
+  return {
+    totalScore: sumArray(values),
+    middleScore: totalScoreArray[middleIndex],
+  };
 };
 
-console.log(syntaxErrorScore2(exampleNavigationInput));
+console.log(syntaxErrorScore(exampleNavigationInput).totalScore);
+
+// --- PART 1 --- //
+
+const navigationInputString = await Deno.readTextFile("input.txt");
+const navigationInput = parseInput(navigationInputString);
+
+console.log(syntaxErrorScore(navigationInput).totalScore);
+
+// --- EXAMPLE PART 2 --- //
+
+console.log(syntaxErrorScore(exampleNavigationInput).middleScore);
 
 // --- PART 2 --- //
 
-console.log(syntaxErrorScore2(navigationInput));
+console.log(syntaxErrorScore(navigationInput).middleScore);
