@@ -6,33 +6,33 @@ I chose to solve them with Typescript using [`deno`](https://deno.land/). To run
 
 ## Contents
 
-| Day | Typescript | Description                                                                       |
-| --- | ---------- | --------------------------------------------------------------------------------- |
-| 01  | [✓][ts01]  | [Sonar Sweep - Measure increasing or decreasing depth][aoc01]                     |
-| 02  | [✓][ts02]  | [Dive! - Maneuvering the submarine][aoc02]                                        |
-| 03  | [✓][ts03]  | [Binary Diagnostic - Finding most common binary digit - Power consumption][aoc03] |
-| 04  | [✓][ts04]  | [Giant Squid - Bingo against squid][aoc04]                                        |
-| 05  | [✓][ts05]  | [Hydrothermal Venture - Find hydrothermal vent lines][aoc05]                      |
-| 06  | [✓][ts06]  | [Lanternfish - Population growth of lanternfish][aoc06]                           |
-| 07  | [✓][ts07]  | [The Treachery of Whales - Align crab submarines horizontally][aoc07]             |
-| 08  | [?][ts08]  | [Seven Segment Search - ][aoc08]                                                  |
-| 09  | [?][ts09]  | [Smoke Basin - ][aoc09]                                                           |
-| 10  | [✓][ts10]  | [Syntax Scoring - Find mistakes in the navigation subsystem syntax][aoc10]        |
-| 11  | [✓][ts11]  | [Dumbo Octopus - Chain reaction of energy flashes][aoc11]                         |
-| 12  | [✓][ts12]  | [Passage Pathing - Find possible paths out of the cave][aoc12]                    |
-| 13  | [?][ts13]  | [???][aoc13]                                                                      |
-| 14  | [?][ts14]  | [???][aoc14]                                                                      |
-| 15  | [?][ts15]  | [???][aoc15]                                                                      |
-| 16  | [?][ts16]  | [???][aoc16]                                                                      |
-| 17  | [?][ts17]  | [???][aoc17]                                                                      |
-| 18  | [?][ts18]  | [???][aoc18]                                                                      |
-| 19  | [?][ts19]  | [???][aoc19]                                                                      |
-| 20  | [?][ts20]  | [???][aoc20]                                                                      |
-| 21  | [?][ts21]  | [???][aoc21]                                                                      |
-| 22  | [?][ts22]  | [???][aoc22]                                                                      |
-| 23  | [?][ts23]  | [???][aoc23]                                                                      |
-| 24  | [?][ts24]  | [???][aoc24]                                                                      |
-| 25  | [?][ts25]  | [???][aoc25]                                                                      |
+| Day | Typescript | Description                                                                                    |
+| --- | ---------- | ---------------------------------------------------------------------------------------------- |
+| 01  | [✓][ts01]  | [Sonar Sweep - Measure increasing or decreasing depth][aoc01]                                  |
+| 02  | [✓][ts02]  | [Dive! - Maneuvering the submarine][aoc02]                                                     |
+| 03  | [✓][ts03]  | [Binary Diagnostic - Finding most common binary digit - Power consumption][aoc03]              |
+| 04  | [✓][ts04]  | [Giant Squid - Bingo against squid][aoc04]                                                     |
+| 05  | [✓][ts05]  | [Hydrothermal Venture - Find hydrothermal vent lines][aoc05]                                   |
+| 06  | [✓][ts06]  | [Lanternfish - Population growth of lanternfish][aoc06]                                        |
+| 07  | [✓][ts07]  | [The Treachery of Whales - Align crab submarines horizontally][aoc07]                          |
+| 08  | [?][ts08]  | [Seven Segment Search - ][aoc08]                                                               |
+| 09  | [?][ts09]  | [Smoke Basin - ][aoc09]                                                                        |
+| 10  | [✓][ts10]  | [Syntax Scoring - Find mistakes in the navigation subsystem syntax][aoc10]                     |
+| 11  | [✓][ts11]  | [Dumbo Octopus - Chain reaction of energy flashes][aoc11]                                      |
+| 12  | [✓][ts12]  | [Passage Pathing - Find possible paths out of the cave][aoc12]                                 |
+| 13  | [✓][ts13]  | [Transparent Origami - Decipher manual through folding and coordination transformation][aoc13] |
+| 14  | [?][ts14]  | [???][aoc14]                                                                                   |
+| 15  | [?][ts15]  | [???][aoc15]                                                                                   |
+| 16  | [?][ts16]  | [???][aoc16]                                                                                   |
+| 17  | [?][ts17]  | [???][aoc17]                                                                                   |
+| 18  | [?][ts18]  | [???][aoc18]                                                                                   |
+| 19  | [?][ts19]  | [???][aoc19]                                                                                   |
+| 20  | [?][ts20]  | [???][aoc20]                                                                                   |
+| 21  | [?][ts21]  | [???][aoc21]                                                                                   |
+| 22  | [?][ts22]  | [???][aoc22]                                                                                   |
+| 23  | [?][ts23]  | [???][aoc23]                                                                                   |
+| 24  | [?][ts24]  | [???][aoc24]                                                                                   |
+| 25  | [?][ts25]  | [???][aoc25]                                                                                   |
 
 [aoc01]: http://adventofcode.com/2020/day/1
 [aoc02]: http://adventofcode.com/2020/day/2
