@@ -1,3 +1,5 @@
+export {};
+
 // --- EXAMPLE PART 1 --- //
 
 const exampleInput = `
