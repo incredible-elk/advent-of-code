@@ -21,7 +21,7 @@ I chose to solve them with Typescript using [`deno`](https://deno.land/). To run
 | 11  | [✓][ts11]  | [Dumbo Octopus - Chain reaction of energy flashes][aoc11]                                      |
 | 12  | [✓][ts12]  | [Passage Pathing - Find possible paths out of the cave][aoc12]                                 |
 | 13  | [✓][ts13]  | [Transparent Origami - Decipher manual through folding and coordination transformation][aoc13] |
-| 14  | [?][ts14]  | [???][aoc14]                                                                                   |
+| 14  | [?][ts14]  | [Extended Polymerization - ][aoc14]                                                            |
 | 15  | [?][ts15]  | [???][aoc15]                                                                                   |
 | 16  | [?][ts16]  | [???][aoc16]                                                                                   |
 | 17  | [?][ts17]  | [???][aoc17]                                                                                   |
