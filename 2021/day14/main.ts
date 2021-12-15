@@ -39,31 +39,50 @@ CN -> C
 
 const examplePolymerization = parseInput(examplePolymerizationInput);
 
-const polymerGrowth = (input: {
-  polymerTemplate: string;
-  pairInsertionRules: Record<string, string>;
-}) => {
-  let polymer = input.polymerTemplate;
+const polymerGrowth = (
+  input: {
+    polymerTemplate: string;
+    pairInsertionRules: Record<string, string>;
+  },
+  numberOfIterations: number
+) => {
+  const template = input.polymerTemplate;
 
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < polymer.length - 1; j += 2) {
-      const pair = polymer.charAt(j) + polymer.charAt(j + 1);
-      const letterToInsert = input.pairInsertionRules[pair];
-      const polymerStart = polymer.substring(0, j + 1);
-      const polymerEnd = polymer.substring(j + 1);
-      polymer = polymerStart + letterToInsert + polymerEnd;
-    }
+  let pairCounters: Record<string, number> = {};
+
+  for (let j = 0; j < template.length - 1; j++) {
+    const pair = template.charAt(j) + template.charAt(j + 1);
+
+    pairCounters[pair] ??= 0;
+    pairCounters[pair]++;
   }
 
-  const letterCounters: Record<string, number> = {};
-  for (let k = 0; k < polymer.length; k++) {
-    const letterToCount = polymer.charAt(k);
+  for (let i = 0; i < numberOfIterations; i++) {
+    const pairsAndCounters = Object.entries(pairCounters);
 
-    if (letterCounters[letterToCount] === undefined) {
-      letterCounters[letterToCount] = 0;
+    pairCounters = {};
+
+    for (const [pair, count] of pairsAndCounters) {
+      const letterToInsert = input.pairInsertionRules[pair];
+      const pair1 = pair.charAt(0) + letterToInsert;
+      const pair2 = letterToInsert + pair.charAt(1);
+
+      pairCounters[pair1] ??= 0;
+      pairCounters[pair1] += count;
+
+      pairCounters[pair2] ??= 0;
+      pairCounters[pair2] += count;
     }
+  }
+  const lastTemplateLetter = template.charAt(template.length - 1);
+  const letterCounters: Record<string, number> = {};
+  letterCounters[lastTemplateLetter] = 1; // last letter is never charAt(0) in pair
 
-    letterCounters[letterToCount]++;
+  for (const [pair, count] of Object.entries(pairCounters)) {
+    const letterToCount = pair.charAt(0);
+
+    letterCounters[letterToCount] ??= 0;
+    letterCounters[letterToCount] += count;
   }
 
   const ammountArray = Object.values(letterCounters);
@@ -74,7 +93,7 @@ const polymerGrowth = (input: {
   return mostCommon - leastCommon;
 };
 
-console.log(polymerGrowth(examplePolymerization));
+console.log(polymerGrowth(examplePolymerization, 10));
 
 // --- PART 1 --- //
 
@@ -82,4 +101,12 @@ const polymerizationInput = await Deno.readTextFile("input.txt");
 
 const polymerization = parseInput(polymerizationInput);
 
-console.log(polymerGrowth(polymerization));
+console.log(polymerGrowth(polymerization, 10));
+
+// --- EXAMPLE PART 2 --- //
+
+console.log(polymerGrowth(examplePolymerization, 40));
+
+// --- PART 2 --- //
+
+console.log(polymerGrowth(polymerization, 40));
